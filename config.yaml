@@ -1,0 +1,72 @@
+# QQL (Quantile Q-Learning) Configuration
+# Universal hyperparameters that work across all environments
+# One of QQL's key advantages is parameter universality
+#
+# Parameter Mapping (Code -> Paper):
+# - discount -> $\gamma$ (discount factor)
+# - tau -> $\tau$ (target network update rate)
+# - beta -> $\beta_{low}$ 
+# - bc_ratio -> $\zeta$ 
+# - mild -> $\lambda$
+# - gamma -> $\omega$ (Euler-Mascheroni constant in paper)
+# - iql_tau_soft, iql_tau, iql_tau_low -> $\alpha_1$, $\alpha_2$, $\alpha_0$ (quantile parameters)
+
+# Constants (from paper and implementation)
+EXP_ADV_MAX: 100.0  # Maximum advantage for numerical stability
+LOG_STD_MIN: -20.0  # Minimum log standard deviation for Gaussian policy
+LOG_STD_MAX: 2.0    # Maximum log standard deviation for Gaussian policy
+gamma: 0.5772155649  # Euler-Mascheroni constant ($\omega$ in paper)
+
+# Environment settings
+env: hopper-medium-expert-v2
+device: cuda
+seed: 0
+
+# Learning rates (universal across environments)
+actor_lr: 3e-4 
+qf_lr: 3e-4     
+vf_lr: 3e-4     
+
+# RL algorithm parameters (universal)
+# Paper: $\gamma$ = 0.99, $\tau$ = 0.005, $\beta_{low}$ = 0.1
+discount: 0.99  # $\gamma$ (Discount factor)
+tau: 0.005      # $\tau$ (Target network update rate)
+
+
+# QQL-specific parameters (universal)
+# Paper: $\alpha_1$ = 1 - exp(-1) ≈ 0.632, $\alpha_2$ = 1 - exp(-exp($\omega$)) ≈ 0.561, $\alpha_0$ = 1 - exp(-exp(-$\omega$)) ≈ 0.439
+iql_tau_soft: 0.632  # $\alpha_1$ (Soft value function quantile)
+iql_tau: 0.561      # $\alpha_2$ (Optimal value function quantile)
+iql_tau_low: 0.439  # $\alpha_0$ (Conservative value function quantile)
+bc_ratio: 1.0       # $\zeta$ 
+mild: 1.0           # $\lambda$ 
+beta: 0.1       # $\beta_{low}$ 
+
+# Training settings (universal)
+max_timesteps: 1000000  # Total training iterations
+batch_size: 256         # Batch size per training step (from paper)
+buffer_size: 2000000    # Replay buffer size
+eval_freq: 5000         # Evaluation frequency
+n_episodes: 10          # Episodes per evaluation
+
+# Network architecture (universal)
+# Paper: Hidden layer dimension = 256, Number of hidden layers = 2, Activation = ReLU
+hidden_dim: 256      # Hidden layer dimension (from paper)
+n_hidden: 2          # Number of hidden layers (from paper)
+actor_dropout: null  # Dropout rate (None = no dropout)
+
+# Data preprocessing
+normalize: true
+normalize_reward: false
+
+# Experiment tracking
+project: QQL
+group: QQL-VR
+name: QQL-VR
+
+# Model persistence
+checkpoints_path: null
+load_model: ''
+
+# Policy type
+iql_deterministic: false 
