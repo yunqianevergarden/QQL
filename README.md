@@ -1,4 +1,4 @@
-**Quantile Q-Learning**
+# Quantile Q-Learning
 
 Official implementation for [Quantile Q-Learning: Revisiting Offline Extreme Q-Learning with Quantile Regression](https://arxiv.org/abs/2511.11973) [TMLR 2026].
 
