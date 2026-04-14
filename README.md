@@ -1,3 +1,9 @@
+**Quantile Q-Learning**
+
+Official implementation for [Quantile Q-Learning: Revisiting Offline Extreme Q-Learning with Quantile Regression](https://arxiv.org/abs/2511.11973) [TMLR 2026].
+
+Code is based on PyTorch.
+
 # QQL Implementation
 
 This implementation is based on [CORL (Clean Offline Reinforcement Learning)](https://github.com/tinkoff-ai/CORL)'s IQL code but modified for QQL (Quantile Q-Learning). If you already have a working CORL environment, you can run this directly.
